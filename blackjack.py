@@ -84,29 +84,24 @@ class Blackjack():
 		return self.play()
 
 	def play(self):
-		in_round = len(self.players)
 		max_val = 0
 		winner = None
 		# while list of players has not been exhausted
-		while(in_round > 0):
-			for player in self.players:
-				# keep asking for hits until denial
-				hit = self.ask_hit(player)
-				while hit == 'y':
-					self.deal_single(player)
-					# check if won or lost
-					victory = player.check_win_lose()
-					if victory == 0:
-						hit = 'n'
-						in_round -= 1
-						print 'you lose. your points add to ' + str(player.add_points())
-					elif victory == 1:
-						hit = 'n'
-						return self.check_for_winner()
-					else:
-						hit = self.ask_hit(player)
-				# remove player from round after they refuse hit
-				in_round -= 1
+		for player in self.players:
+			# keep asking for hits until denial
+			hit = self.ask_hit(player)
+			while hit == 'y':
+				self.deal_single(player)
+				# check if won or lost
+				victory = player.check_win_lose()
+				if victory == 0:
+					hit = 'n'
+					print 'you lose. your points add to ' + str(player.add_points())
+				elif victory == 1:
+					hit = 'n'
+					return self.check_for_winner()
+				else:
+					hit = self.ask_hit(player)
 		# return player with the highest score
 		return self.check_for_winner()
 
